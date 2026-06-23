@@ -1,19 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
 
-<h1>Dashboard</h1>
+<div class="card">
+    <h1>Welcome, {{ user.username }}</h1>
+    <p class="subtitle">Your past resume analyses</p>
+    <a href="{{ url_for('home') }}" class="btn">Analyze a New Resume</a>
+</div>
 
-{% for analysis in analyses %}
-<p>
-ATS Score: {{ analysis.ats_score }}
-|
-Match Score: {{ analysis.match_score }}
-</p>
-{% endfor %}
+<div class="card">
+    <h2>History</h2>
 
-</body>
-</html>
+    {% if analyses %}
+        {% for analysis in analyses %}
+        <div class="history-item">
+            <div>
+                <strong>{{ analysis.filename }}</strong>
+                <div class="meta">{{ analysis.created_at.strftime('%b %d, %Y at %I:%M %p') }}</div>
+            </div>
+            <div class="meta">
+                ATS: <strong style="color: var(--text);">{{ analysis.ats_score }}</strong>
+                &nbsp;|&nbsp;
+                Match: <strong style="color: var(--text);">{{ analysis.match_score }}%</strong>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="empty-state">No analyses yet. Upload a resume on the home page to get started.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
