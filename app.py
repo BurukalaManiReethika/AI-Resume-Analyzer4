@@ -267,18 +267,19 @@ def analyze():
         resume.filename
     )
 
-    filepath = os.path.join(
-        app.config['UPLOAD_FOLDER'],
-        filename
-    )
-    UPLOAD_FOLDER = "static/uploads"
+   filename = secure_filename(
+    resume.filename
+)
+
+UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 filepath = os.path.join(
     UPLOAD_FOLDER,
-    resume.filename
+    filename
 )
-    resume.save(filepath)
+
+resume.save(filepath)
 
     resume_text = extract_text(filepath)
 
