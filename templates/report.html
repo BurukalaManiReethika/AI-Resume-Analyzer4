@@ -1,19 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Report</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Report{% endblock %}
+{% block content %}
 
-<h1>Analysis Report</h1>
+<div class="card">
+    <h1>Analysis Report</h1>
+    <p class="subtitle">{{ filename }}</p>
 
-<h2>ATS Score: {{ ats_score }}</h2>
+    <div class="score-row">
+        <div class="score-box">
+            <div class="score-value {{ 'score-good' if ats_score >= 70 else ('score-warn' if ats_score >= 40 else 'score-bad') }}">
+                {{ ats_score }}
+            </div>
+            <div class="score-label">ATS Score</div>
+        </div>
+        <div class="score-box">
+            <div class="score-value {{ 'score-good' if match_score >= 70 else ('score-warn' if match_score >= 40 else 'score-bad') }}">
+                {{ match_score }}%
+            </div>
+            <div class="score-label">JD Match Score</div>
+        </div>
+    </div>
 
-<h2>Match Score: {{ match_score }}%</h2>
+    <div class="actions">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Analyze Another</a>
+        {% if user %}<a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Dashboard</a>{% endif %}
+    </div>
+</div>
 
-<a href="/dashboard">
-Dashboard
-</a>
+<div class="card">
+    <h2>ATS Checklist</h2>
+    <ul class="checklist">
+        {% for label, passed, tip in ats_breakdown %}
+        <li>
+            <span class="check-icon {{ 'check-pass' if passed else 'check-fail' }}">{{ '✓' if passed else '✕' }}</span>
+            <span>
+                {{ label }}
+                {% if not passed %}<span class="tip">{{ tip }}</span>{% endif %}
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
-</body>
-</html>
+{% if missing_keywords %}
+<div class="card">
+    <h2>Missing Keywords from Job Description</h2>
+    <p class="subtitle">Consider weaving these into your resume if they genuinely apply to your experience.</p>
+    <div class="tag-list">
+        {% for kw in missing_keywords %}
+        <span class="tag tag-missing">{{ kw }}</span>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if matched_keywords %}
+<div class="card">
+    <h2>Matched Keywords</h2>
+    <div class="tag-list">
+        {% for kw in matched_keywords %}
+        <span class="tag tag-matched">{{ kw }}</span>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
