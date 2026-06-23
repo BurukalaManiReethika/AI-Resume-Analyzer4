@@ -1,61 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>AI Resume Analyzer</title>
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}AI Resume Analyzer{% endblock %}
+{% block content %}
 
-<div class="container">
+<div class="card">
+    <h1>Check your resume against any job</h1>
+    <p class="subtitle">Upload a resume and paste a job description to get an ATS-friendliness score and a keyword match score in seconds.</p>
 
-    <h1>AI Resume Analyzer</h1>
+    <form action="{{ url_for('analyze') }}" method="POST" enctype="multipart/form-data">
 
-    <form action="/analyze"
-          method="POST"
-          enctype="multipart/form-data">
+        <label for="resume">Resume (PDF or DOCX, max 5MB)</label>
+        <input type="file" id="resume" name="resume" accept=".pdf,.docx" required>
 
-        <label>Upload Resume (PDF)</label>
-        <br><br>
+        <label for="job_description">Job Description</label>
+        <textarea id="job_description" name="job_description"
+                  placeholder="Paste the full job description here..." required></textarea>
 
-        <input type="file"
-               name="resume"
-               accept=".pdf"
-               required>
-
-        <br><br>
-
-        <label>Job Description</label>
-        <br><br>
-
-        <textarea
-            name="job_description"
-            rows="10"
-            cols="60"
-            placeholder="Paste Job Description Here..."
-            required></textarea>
-
-        <br><br>
-
-        <button type="submit">
-            Analyze Resume
-        </button>
-
+        <button type="submit">Analyze Resume</button>
     </form>
-
-    <br>
-
-    <a href="/login">
-        Login
-    </a>
-
-    |
-
-    <a href="/register">
-        Register
-    </a>
-
 </div>
 
-</body>
-</html>
+{% if not user %}
+<div class="card">
+    <p style="margin:0; color: var(--text-dim); font-size:0.9rem;">
+        Tip: <a href="{{ url_for('register') }}" style="color: var(--accent-hover); text-decoration:none;">create a free account</a>
+        to save your analysis history and track improvement over time.
+    </p>
+</div>
+{% endif %}
+
+{% endblock %}
