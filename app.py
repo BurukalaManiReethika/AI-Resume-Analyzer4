@@ -72,7 +72,7 @@ def analyze():
         match_score=match_score
     )
     @app.route('/logout')
-def logout():
+    def logout():
     session.clear()
     return redirect(url_for('home'))
 if __name__ == '__main__':
