@@ -42,6 +42,47 @@
     </ul>
 </div>
 
+{% if rewrite_suggestions %}
+<div class="card">
+    <h2>Suggested Rewrites</h2>
+    <p class="subtitle">Concrete fixes pulled from your resume — apply the ones that stay true to your experience.</p>
+    <div class="suggestion-list">
+        {% for s in rewrite_suggestions %}
+        <div class="suggestion-item">
+            <div class="suggestion-header">
+                <strong>{{ s.issue }}</strong>
+                <span class="suggestion-category">{{ s.category }}</span>
+            </div>
+            <p class="suggestion-tip">{{ s.tip }}</p>
+            {% if s.before or s.after %}
+            <div class="suggestion-rewrite">
+                {% if s.before %}
+                <div class="rewrite-line rewrite-before">
+                    <span class="rewrite-label">Before</span>
+                    <span>{{ s.before }}</span>
+                </div>
+                {% endif %}
+                {% if s.after %}
+                <div class="rewrite-line rewrite-after">
+                    <span class="rewrite-label">After</span>
+                    <span>{{ s.after }}</span>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            {% if s.keywords %}
+            <div class="tag-list" style="margin-top: 10px;">
+                {% for kw in s.keywords %}
+                <span class="tag tag-missing">{{ kw }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
 {% if missing_keywords %}
 <div class="card">
     <h2>Missing Keywords from Job Description</h2>
