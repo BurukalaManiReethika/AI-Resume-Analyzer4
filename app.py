@@ -9,6 +9,7 @@ from werkzeug.utils import secure_filename
 from utils.resume_parser import extract_text, ParseError
 from utils.ats_score import calculate_ats_score
 from utils.keyword_matcher import match_keywords
+from utils.suggestions import generate_rewrite_suggestions
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads")
@@ -196,6 +197,7 @@ def analyze():
 
     ats_score, ats_breakdown = calculate_ats_score(resume_text)
     match_score, missing_keywords, matched_keywords = match_keywords(resume_text, jd)
+    rewrite_suggestions = generate_rewrite_suggestions(resume_text, missing_keywords)
 
     user = current_user()
     if user:
@@ -217,6 +219,7 @@ def analyze():
         match_score=match_score,
         missing_keywords=missing_keywords,
         matched_keywords=matched_keywords,
+        rewrite_suggestions=rewrite_suggestions,
         user=user,
     )
 
