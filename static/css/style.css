@@ -239,3 +239,69 @@ button:hover, .btn:hover { background: var(--accent-hover); }
 
 .auth-links { margin-top: 20px; text-align: center; color: var(--text-dim); font-size: 0.9rem; }
 .auth-links a { color: var(--accent-hover); text-decoration: none; }
+
+.suggestion-list { display: flex; flex-direction: column; gap: 18px; }
+
+.suggestion-item {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+}
+
+.suggestion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.suggestion-category {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--accent-hover);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.suggestion-issue {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.suggestion-tip { font-size: 0.9rem; margin-bottom: 10px; }
+
+.suggestion-rewrite { display: flex; flex-direction: column; gap: 8px; }
+
+.rewrite-line {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    line-height: 1.45;
+}
+
+.rewrite-before { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); }
+.rewrite-after { background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.25); }
+
+.rewrite-label {
+    flex-shrink: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding-top: 1px;
+}
+
+.rewrite-before .rewrite-label { color: #fca5a5; }
+.rewrite-after .rewrite-label { color: #86efac; }
